@@ -1,20 +1,27 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { useEffect, useState } from "react";
+import { MainComponent } from "./Components/main/mainComponent";
+import { Modal } from "./Components/modal/modal";
+import { NoteComponent } from "./Components/note/noteComponent";
+import { AppMode } from "./type";
 
 function App() {
-  function btnClick() {
-    const electron = window.require("electron");
-    electron.ipcRenderer.send("BTN_CLICK", "message");
-  }
+  const [modal, setModal] = useState<boolean>(false);
+  const [mode, setMode] = useState<AppMode>("note");
+  const [data, setData] = useState<string>("");
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Electron!</p>
-        <button onClick={btnClick}>Click it!</button>
-      </header>
+      {mode === "main" ? (
+        <MainComponent
+          setMode={setMode}
+          setModal={setModal}
+          setData={setData}
+        />
+      ) : null}
+      {mode === "note" ? (
+        <NoteComponent setMode={setMode} setModal={setModal} data={data} />
+      ) : null}
+      {modal ? <Modal /> : null}
     </div>
   );
 }
