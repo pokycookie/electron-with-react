@@ -1,10 +1,4 @@
-const {
-  app,
-  BrowserWindow,
-  ipcMain,
-  Notification,
-  dialog,
-} = require("electron");
+const { app, BrowserWindow, ipcMain, dialog } = require("electron");
 const fs = require("fs");
 const path = require("path");
 
@@ -28,9 +22,6 @@ app
   .whenReady()
   .then(createWindow)
   .then(async () => {
-    ipcMain.on("BTN_CLICK", (event, args) => {
-      new Notification({ title: "NOTIFICATION", body: args }).show();
-    });
     ipcMain.on("fsWrite", (event, args) => {
       !fs.existsSync(rootPath) && fs.mkdirSync(rootPath);
       const tempPath = path.join(rootPath, `${args.fileName}.txt`);

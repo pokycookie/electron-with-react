@@ -1,12 +1,14 @@
 .noteComponent {
   width: 100%;
   height: 100%;
-  padding: 30px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  position: relative;
+  background-color: #e4dccf;
+  border-radius: 10px;
 }
 
 /* header */

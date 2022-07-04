@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MainComponent } from "./Components/main/mainComponent";
 import { Modal } from "./Components/modal/modal";
 import { NoteComponent } from "./Components/note/noteComponent";
+import { NotePage } from "./Components/note/notePage";
 import { AppMode } from "./type";
 
 function App() {
   const [modal, setModal] = useState<boolean>(false);
-  const [mode, setMode] = useState<AppMode>("note");
+  const [mode, setMode] = useState<AppMode>("notePage");
   const [data, setData] = useState<string>("");
 
   return (
@@ -18,6 +19,7 @@ function App() {
           setData={setData}
         />
       ) : null}
+      {mode === "notePage" ? <NotePage /> : null}
       {mode === "note" ? (
         <NoteComponent setMode={setMode} setModal={setModal} data={data} />
       ) : null}
