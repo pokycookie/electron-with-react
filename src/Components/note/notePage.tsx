@@ -1,73 +1,57 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOffset, useWindows } from "../../hooks";
+import { coord, noteObj } from "../../type";
+import { GridGuide } from "./gridGuide";
+import { Prototype } from "./prototype";
 
 export function NotePage() {
+  const [data, setData] = useState<noteObj[]>();
+
   const DOM = useRef<HTMLInputElement>(null);
   const offset = useOffset(DOM);
 
-  const noteSize = useWindows(60, 60);
+  const noteSize = useWindows(DOM);
   const GRID_SIZE = 10 + (noteSize.x % 10) / (noteSize.x / 10);
-  const gridCount = [
-    Math.round(noteSize.x / GRID_SIZE),
-    Math.round(noteSize.y / GRID_SIZE),
-  ];
-
-  const loopX: number[] = [];
-  const loopY: number[] = [];
-  for (let i = 0; i < gridCount[0]; i++) {
-    loopX.push(i);
-  }
-  for (let i = 0; i < gridCount[1]; i++) {
-    loopY.push(i);
-  }
 
   return (
     <div className="noteComponent notePage" ref={DOM}>
-      {loopX.map((value) => {
-        return (
-          <div
-            style={{
-              position: "absolute",
-              height: noteSize.y,
-              width: "1px",
-              left: value * GRID_SIZE,
-              top: 0,
-              borderRight: "1px dashed red",
-              boxSizing: "border-box",
-              pointerEvents: "none",
-            }}
-          ></div>
-        );
-      })}
-      {loopY.map((value) => {
-        return (
-          <div
-            style={{
-              position: "absolute",
-              height: "1px",
-              width: noteSize.x,
-              left: 0,
-              top: value * GRID_SIZE,
-              borderBottom: "1px dashed red",
-              boxSizing: "border-box",
-              pointerEvents: "none",
-            }}
-          ></div>
-        );
-      })}
+      <GridGuide noteSize={noteSize} gridSize={GRID_SIZE} />
+      <Prototype
+        offset={offset}
+        gridSize={GRID_SIZE}
+        data={data}
+        setData={setData}
+      />
       {typeof offset !== "boolean" ? (
         <div
           style={{
-            backgroundColor: "red",
+            backgroundColor: "#3F4E4F",
             width: GRID_SIZE,
             height: GRID_SIZE,
             position: "absolute",
-            left: Math.round(offset.x / GRID_SIZE) * GRID_SIZE,
-            top: Math.round(offset.y / GRID_SIZE) * GRID_SIZE,
+            left: Math.floor(offset.x / GRID_SIZE) * GRID_SIZE,
+            top: Math.floor(offset.y / GRID_SIZE) * GRID_SIZE,
             pointerEvents: "none",
           }}
         ></div>
       ) : null}
+      {typeof data !== "undefined"
+        ? data.map((element, index) => {
+            return (
+              <div
+                key={index}
+                className="_noteObj"
+                style={{
+                  backgroundColor: "#3F4E4F",
+                  width: element.width * GRID_SIZE,
+                  height: element.height * GRID_SIZE,
+                  left: element.x * GRID_SIZE,
+                  top: element.y * GRID_SIZE,
+                }}
+              ></div>
+            );
+          })
+        : null}
     </div>
   );
 }

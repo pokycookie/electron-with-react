@@ -59,3 +59,8 @@ body {
 ._input:focus {
   outline: none;
 }
+
+._noteObj {
+  position: absolute;
+  pointer-events: none;
+}
