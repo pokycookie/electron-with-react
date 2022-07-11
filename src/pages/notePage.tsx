@@ -1,5 +1,8 @@
+import { faFlaskVial } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { AppMode } from "../../type";
+import { AppMode } from "../type";
+import { NotePage2 } from "./notePage2";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -9,9 +12,10 @@ interface Props {
   data: string;
 }
 
-export function NoteComponent(props: Props) {
+export function NotePage(props: Props) {
   const [fileName, setFileName] = useState<string>("");
   const [contents, setContents] = useState<string>(props.data);
+  const [draw, setDraw] = useState<boolean>(false);
 
   function exit() {
     props.setMode("main");
@@ -25,15 +29,15 @@ export function NoteComponent(props: Props) {
   };
 
   return (
-    <div className="noteComponent">
+    <div className="notePage">
       <div className="header">
-        <input
+        {/* <input
           className="_input title"
           value={fileName}
           onChange={({ target }) => {
             setFileName(target.value);
           }}
-        />
+        /> */}
         <button className="_btn" onClick={callFsWrite}>
           SAVE
         </button>
@@ -41,14 +45,23 @@ export function NoteComponent(props: Props) {
           EXIT
         </button>
       </div>
-      <div className="contentsArea">
-        <textarea
+      <div className="main">
+        {/* <textarea
           className="_input contents"
           value={contents}
           onChange={({ target }) => {
             setContents(target.value);
           }}
-        ></textarea>
+        ></textarea> */}
+        <NotePage2 draw={draw} setDraw={setDraw} />
+        <div className="nav">
+          <button
+            className="navBtn"
+            onClick={() => setDraw(draw ? false : true)}
+          >
+            <FontAwesomeIcon icon={faFlaskVial} />
+          </button>
+        </div>
       </div>
     </div>
   );

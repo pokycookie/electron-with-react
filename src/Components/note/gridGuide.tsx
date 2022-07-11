@@ -1,7 +1,7 @@
-import { coord } from "../../type";
+import { Coord } from "../../type";
 
 interface Props {
-  noteSize: coord;
+  noteSize: Coord;
   gridSize: number;
 }
 

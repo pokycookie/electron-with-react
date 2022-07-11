@@ -1,37 +1,36 @@
 import { useEffect, useState } from "react";
 import { useMouse } from "../../hooks";
-import { coord, noteObj } from "../../type";
+import { Coord, noteObj, noteObjType } from "../../type";
 
 interface Props {
-  offset: boolean | coord;
+  offset: false | Coord;
   gridSize: number;
-  data: noteObj[] | undefined;
-  setData: (noteObjs: noteObj[] | undefined) => void;
+  data: noteObj[] | null;
+  setData: (noteObjs: noteObj[] | null) => void;
+  setDraw: (drawable: boolean) => void;
+  type: noteObjType;
 }
 
 export function Prototype(props: Props) {
-  const [startPos, setStartPos] = useState<coord>({
-    x: 0,
-    y: 0,
-  });
+  const [startPos, setStartPos] = useState<Coord | false>(false);
 
   const mouse = useMouse();
 
   useEffect(() => {
+    // set mouse position
     const position =
-      typeof props.offset === "boolean"
-        ? { x: 0, y: 0 }
+      props.offset === false
+        ? false
         : {
             x: Math.floor(props.offset.x / props.gridSize) * props.gridSize,
             y: Math.floor(props.offset.y / props.gridSize) * props.gridSize,
           };
-    if (mouse === true) {
-      setStartPos(position);
-    } else {
+    // mouseDown
+    if (mouse === true) setStartPos(position);
+    // mouseUp
+    if (mouse === false && position !== false && startPos !== false) {
       const origin =
-        typeof props.data === "undefined"
-          ? new Array<noteObj>()
-          : [...props.data];
+        props.data === null ? new Array<noteObj>() : [...props.data];
       const result: noteObj = {
         x: Math.round(Math.min(startPos.x, position.x) / props.gridSize),
         y: Math.round(Math.min(startPos.y, position.y) / props.gridSize),
@@ -41,10 +40,12 @@ export function Prototype(props: Props) {
         height: Math.round(
           (Math.abs(position.y - startPos.y) + props.gridSize) / props.gridSize
         ),
+        data: null,
       };
-      console.log(collapseCheck(result, origin));
+      // push data if there's no collapse
       if (!collapseCheck(result, origin)) {
         origin.push(result);
+        props.setDraw(false);
         props.setData(origin);
       }
     }
@@ -53,13 +54,10 @@ export function Prototype(props: Props) {
 
   return (
     <div>
-      {typeof props.offset !== "boolean" && mouse === true ? (
+      {props.offset !== false && mouse === true && startPos !== false ? (
         <div
-          className="_noteObj"
+          className="_prototype"
           style={{
-            zIndex: "3",
-            backgroundColor: "#A27B5C",
-            opacity: 0.5,
             width:
               Math.abs(
                 Math.floor(props.offset.x / props.gridSize) * props.gridSize -
@@ -85,16 +83,14 @@ export function Prototype(props: Props) {
   );
 }
 
-/**
- * If collapse, it returns true
- */
+/** If collapse, returns true */
 function collapseCheck(target: noteObj, dataArr: noteObj[]): boolean {
   let result = false;
-  const targetEndPos: coord = {
+  const targetEndPos: Coord = {
     x: target.x + target.width,
     y: target.y + target.height,
   };
-  const targetPosArr: coord[] = [];
+  const targetPosArr: Coord[] = [];
   for (let x = target.x; x < targetEndPos.x; x++) {
     for (let y = target.y; y < targetEndPos.y; y++) {
       targetPosArr.push({ x, y });
@@ -102,7 +98,7 @@ function collapseCheck(target: noteObj, dataArr: noteObj[]): boolean {
   }
 
   dataArr.forEach((element) => {
-    const dataEndPos: coord = {
+    const dataEndPos: Coord = {
       x: element.x + element.width,
       y: element.y + element.height,
     };

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AppMode } from "../../type";
+import { AppMode } from "../type";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -9,7 +9,7 @@ interface Props {
   setData: (data: string) => void;
 }
 
-export function MainComponent(props: Props) {
+export function MainPage(props: Props) {
   useEffect(() => {
     ipcRenderer.on("fsRead", (event: any, args: string) => {
       props.setData(args);
