@@ -55,10 +55,7 @@ export function NotePage(props: Props) {
         ></textarea> */}
         <NotePage2 draw={draw} setDraw={setDraw} />
         <div className="nav">
-          <button
-            className="navBtn"
-            onClick={() => setDraw(draw ? false : true)}
-          >
+          <button className="navBtn" onClick={() => setDraw(draw ? false : true)}>
             <FontAwesomeIcon icon={faFlaskVial} />
           </button>
         </div>

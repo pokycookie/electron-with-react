@@ -62,6 +62,7 @@ body {
 ._noteObj {
   /* pointer-events: none; */
   position: absolute;
+  color: white;
   /* cursor: pointer; */
 }
 

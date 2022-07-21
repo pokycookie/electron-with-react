@@ -84,7 +84,7 @@ export function Prototype(props: Props) {
 }
 
 /** If collapse, returns true */
-function collapseCheck(target: noteObj, dataArr: noteObj[]): boolean {
+export function collapseCheck(target: noteObj, dataArr: noteObj[]): boolean {
   let result = false;
   const targetEndPos: Coord = {
     x: target.x + target.width,
