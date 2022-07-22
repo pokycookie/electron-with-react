@@ -1,4 +1,4 @@
-import { Coord } from "../../type";
+import { Coord } from "../type";
 
 interface Props {
   noteSize: Coord;

@@ -83,10 +83,11 @@
   bottom: -5px;
   border-radius: 100%;
   cursor: se-resize;
+  z-index: 1;
 }
 
 .notePage .resizeDraw {
-  z-index: 1;
+  z-index: 3;
   opacity: 0.5;
   pointer-events: none;
 }

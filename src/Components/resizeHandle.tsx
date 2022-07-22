@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useMouseReturn } from "../hooks";
 import { Coord, noteObj, NotePos } from "../type";
-import { collapseCheck } from "./note/prototype";
+import { collapseCheck } from "./prototype";
 
 interface Props {
   index: number;
   data: noteObj[];
-  setData: (data: noteObj[] | null) => void;
+  setData: (data: noteObj[]) => void;
   mouse: boolean | useMouseReturn;
   offset: Coord | false;
   gridSize: number;
@@ -30,9 +30,6 @@ export function ResizeHandle(props: Props) {
   const mouseDownHandler = (e: React.MouseEvent) => {
     e.preventDefault();
     setClick(true);
-    // const temp = [...props.data];
-    // temp.splice(props.index, 1);
-    // props.setData(temp);
   };
 
   // Check when user try to resize

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useMouse } from "../../hooks";
-import { Coord, noteObj, noteObjType } from "../../type";
+import { useMouse } from "../hooks";
+import { Coord, noteObj, noteObjType } from "../type";
 
 interface Props {
   offset: false | Coord;
@@ -29,17 +29,12 @@ export function Prototype(props: Props) {
     if (mouse === true) setStartPos(position);
     // mouseUp
     if (mouse === false && position !== false && startPos !== false) {
-      const origin =
-        props.data === null ? new Array<noteObj>() : [...props.data];
+      const origin = props.data === null ? new Array<noteObj>() : [...props.data];
       const result: noteObj = {
         x: Math.round(Math.min(startPos.x, position.x) / props.gridSize),
         y: Math.round(Math.min(startPos.y, position.y) / props.gridSize),
-        width: Math.round(
-          (Math.abs(position.x - startPos.x) + props.gridSize) / props.gridSize
-        ),
-        height: Math.round(
-          (Math.abs(position.y - startPos.y) + props.gridSize) / props.gridSize
-        ),
+        width: Math.round((Math.abs(position.x - startPos.x) + props.gridSize) / props.gridSize),
+        height: Math.round((Math.abs(position.y - startPos.y) + props.gridSize) / props.gridSize),
         data: null,
       };
       // push data if there's no collapse
@@ -59,23 +54,16 @@ export function Prototype(props: Props) {
           className="_prototype"
           style={{
             width:
-              Math.abs(
-                Math.floor(props.offset.x / props.gridSize) * props.gridSize -
-                  startPos.x
-              ) + props.gridSize,
+              Math.abs(Math.floor(props.offset.x / props.gridSize) * props.gridSize - startPos.x) +
+              props.gridSize,
             height:
-              Math.abs(
-                Math.floor(props.offset.y / props.gridSize) * props.gridSize -
-                  startPos.y
-              ) + props.gridSize,
+              Math.abs(Math.floor(props.offset.y / props.gridSize) * props.gridSize - startPos.y) +
+              props.gridSize,
             left: Math.min(
               startPos.x,
               Math.floor(props.offset.x / props.gridSize) * props.gridSize
             ),
-            top: Math.min(
-              startPos.y,
-              Math.floor(props.offset.y / props.gridSize) * props.gridSize
-            ),
+            top: Math.min(startPos.y, Math.floor(props.offset.y / props.gridSize) * props.gridSize),
           }}
         ></div>
       ) : null}

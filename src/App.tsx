@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal } from "./Components/modal/modal";
+import { Modal } from "./Components/modal";
 import { MainPage } from "./pages/mainPage";
 import { NotePage } from "./pages/notePage";
 
@@ -15,9 +15,7 @@ function App() {
       {mode === "main" ? (
         <MainPage setMode={setMode} setModal={setModal} setData={setData} />
       ) : null}
-      {mode === "note" ? (
-        <NotePage setMode={setMode} setModal={setModal} data={data} />
-      ) : null}
+      {mode === "note" ? <NotePage setMode={setMode} setModal={setModal} data={data} /> : null}
       {modal ? <Modal /> : null}
     </div>
   );
