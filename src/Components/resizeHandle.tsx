@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useMouseReturn } from "../hooks";
-import { Coord, noteObj, NotePos } from "../type";
+import { Coord, INoteObj, INotePos } from "../type";
 import { collapseCheck } from "./prototype";
 
 interface Props {
   index: number;
-  data: noteObj[];
-  setData: (data: noteObj[]) => void;
+  data: INoteObj[];
+  setData: (data: INoteObj[]) => void;
   mouse: boolean | useMouseReturn;
   offset: Coord | false;
   gridSize: number;
-  setResizeDraw: (pos: NotePos | false) => void;
-  resizeDraw: NotePos | false;
+  setResizeDraw: (pos: INotePos | false) => void;
+  resizeDraw: INotePos | false;
 }
 
 export function ResizeHandle(props: Props) {
@@ -47,12 +47,13 @@ export function ResizeHandle(props: Props) {
             y: Math.floor(props.offset.y / props.gridSize),
           };
           // Set temp data with current mouse position and start position
-          const tempData: noteObj = {
+          const tempData: INoteObj = {
             x: Math.min(startPos.x, position.x),
             y: Math.min(startPos.y, position.y),
             width: Math.abs(position.x - startPos.x) + 1,
             height: Math.abs(position.y - startPos.y) + 1,
             data: null,
+            type: props.data[props.index].type,
           };
           // Collapse check before apply data
           if (!collapseCheck(tempData, origin)) {
@@ -75,7 +76,7 @@ export function ResizeHandle(props: Props) {
           x: Math.floor(props.offset.x / props.gridSize),
           y: Math.floor(props.offset.y / props.gridSize),
         };
-        const tempData: NotePos = {
+        const tempData: INotePos = {
           x: Math.min(startPos.x, position.x),
           y: Math.min(startPos.y, position.y),
           width: Math.abs(position.x - startPos.x) + 1,
@@ -90,7 +91,7 @@ export function ResizeHandle(props: Props) {
   return <div className="resizeHandle" onMouseDown={(e) => mouseDownHandler(e)}></div>;
 }
 
-function diffPos(pos1: NotePos | false, pos2: NotePos | false): boolean {
+function diffPos(pos1: INotePos | false, pos2: INotePos | false): boolean {
   if (pos1 === false && pos2 === false) {
     return true;
   } else if (pos1 === false || pos2 === false) {

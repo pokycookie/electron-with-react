@@ -1,8 +1,8 @@
-import { faFlaskVial } from "@fortawesome/free-solid-svg-icons";
+import { faFlaskVial, faKeyboard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { AppMode } from "../type";
-import { NotePage2 } from "./notePage2";
+import { AppMode, NoteObjType } from "../type";
+import { Paper } from "../Components/paper";
 
 const { ipcRenderer } = window.require("electron");
 
@@ -15,7 +15,7 @@ interface Props {
 export function NotePage(props: Props) {
   const [fileName, setFileName] = useState<string>("");
   const [contents, setContents] = useState<string>(props.data);
-  const [draw, setDraw] = useState<boolean>(false);
+  const [drawType, setDrawType] = useState<NoteObjType | null>(null);
 
   function exit() {
     props.setMode("main");
@@ -28,16 +28,13 @@ export function NotePage(props: Props) {
     });
   };
 
+  const typeBtnOnClick = (type: NoteObjType) => {
+    setDrawType(drawType !== null ? null : type);
+  };
+
   return (
     <div className="notePage">
       <div className="header">
-        {/* <input
-          className="_input title"
-          value={fileName}
-          onChange={({ target }) => {
-            setFileName(target.value);
-          }}
-        /> */}
         <button className="_btn" onClick={callFsWrite}>
           SAVE
         </button>
@@ -46,17 +43,16 @@ export function NotePage(props: Props) {
         </button>
       </div>
       <div className="main">
-        {/* <textarea
-          className="_input contents"
-          value={contents}
-          onChange={({ target }) => {
-            setContents(target.value);
-          }}
-        ></textarea> */}
-        <NotePage2 draw={draw} setDraw={setDraw} />
+        <Paper drawType={drawType} setDrawType={setDrawType} />
         <div className="nav">
-          <button className="navBtn" onClick={() => setDraw(draw ? false : true)}>
+          <button className="navBtn" onClick={() => typeBtnOnClick("none")}>
             <FontAwesomeIcon icon={faFlaskVial} />
+          </button>
+          <button className="navBtn" onClick={() => typeBtnOnClick("input")}>
+            <FontAwesomeIcon icon={faKeyboard} />
+          </button>
+          <button className="navBtn" onClick={() => typeBtnOnClick("textarea")}>
+            <FontAwesomeIcon icon={faKeyboard} />
           </button>
         </div>
       </div>

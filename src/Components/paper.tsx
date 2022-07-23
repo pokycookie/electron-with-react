@@ -1,23 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useMouse, useOffset, useWindows } from "../hooks";
-import { Coord, noteObj, NotePos } from "../type";
-import { GridGuide } from "../Components/gridGuide";
-import { collapseCheck, Prototype } from "../Components/prototype";
-import { ResizeHandle } from "../Components/resizeHandle";
-import NoteObj from "../Components/noteObj";
+import { INoteObj, INotePos, NoteObjType } from "../type";
+import { GridGuide } from "./gridGuide";
+import { Prototype } from "./prototype";
+import NoteObj from "./noteObj";
 
 interface Props {
-  draw: boolean;
-  setDraw: (drawable: boolean) => void;
+  drawType: NoteObjType | null;
+  setDrawType: (drawable: NoteObjType | null) => void;
 }
 
-export function NotePage2(props: Props) {
+export function Paper(props: Props) {
   // Array of noteObj data
-  const [data, setData] = useState<noteObj[] | null>(null);
+  const [data, setData] = useState<INoteObj[] | null>(null);
   // Data's index which is selected
   const [selectedData, setSelectedData] = useState<number | null>(null);
   // Position for resizing noteObj
-  const [resizeDraw, setResizeDraw] = useState<NotePos | false>(false);
+  const [resizeDraw, setResizeDraw] = useState<INotePos | false>(false);
 
   const DOM = useRef<HTMLDivElement>(null);
   const offset = useOffset(DOM, { height: -80 });
@@ -27,17 +26,21 @@ export function NotePage2(props: Props) {
   const mouse = useMouse({ target: true });
 
   return (
-    <div className="note" ref={DOM} style={{ cursor: props.draw ? "crosshair" : "default" }}>
+    <div
+      className="note"
+      ref={DOM}
+      style={{ cursor: props.drawType !== null ? "crosshair" : "default" }}
+    >
       <GridGuide noteSize={noteSize} gridSize={GRID_SIZE} />
 
-      {props.draw ? (
+      {props.drawType !== null ? (
         <Prototype
           offset={offset}
           gridSize={GRID_SIZE}
           data={data}
           setData={setData}
-          setDraw={props.setDraw}
-          type="none"
+          setDrawType={props.setDrawType}
+          type={props.drawType}
         />
       ) : null}
 

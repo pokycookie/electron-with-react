@@ -1,21 +1,23 @@
 import { useEffect, useState } from "react";
 import { useMouseReturn } from "../hooks";
-import { Coord, noteObj, NotePos } from "../type";
+import { Coord, INoteObj, INoteObjProp, INotePos } from "../type";
+import InputObj from "./noteObj/inputObj";
+import NoneObj from "./noteObj/noneObj";
+import TextareaObj from "./noteObj/textareaObj";
 import { collapseCheck } from "./prototype";
-import { ResizeHandle } from "./resizeHandle";
 
 interface Props {
   selectedData: number | null;
   index: number;
-  data: noteObj[];
-  setData: (data: noteObj[]) => void;
+  data: INoteObj[];
+  setData: (data: INoteObj[]) => void;
   gridSize: number;
   mouse: boolean | useMouseReturn;
   offset: Coord | false;
-  setResizeDraw: (pos: NotePos | false) => void;
-  resizeDraw: NotePos | false;
+  setResizeDraw: (pos: INotePos | false) => void;
+  resizeDraw: INotePos | false;
   setSelectedData: (data: number | null) => void;
-  element: noteObj;
+  element: INoteObj;
 }
 
 export default function NoteObj(props: Props) {
@@ -29,7 +31,6 @@ export default function NoteObj(props: Props) {
   const height = props.element.height * props.gridSize;
   const left = props.element.x * props.gridSize;
   const top = props.element.y * props.gridSize;
-  const backgroundColor = "#3F4E4F";
 
   // Select data
   const noteObjClick = (index: number) => {
@@ -61,12 +62,13 @@ export default function NoteObj(props: Props) {
       if (props.data !== null && props.resizeDraw !== false) {
         const origin = [...props.data];
         origin.splice(props.selectedData, 1);
-        const tempData: noteObj = {
+        const tempData: INoteObj = {
           x: props.resizeDraw.x,
           y: props.resizeDraw.y,
           width: props.resizeDraw.width,
           height: props.resizeDraw.height,
           data: null,
+          type: props.data[props.index].type,
         };
         if (!collapseCheck(tempData, origin)) {
           origin.splice(props.selectedData, 0, tempData);
@@ -114,7 +116,7 @@ export default function NoteObj(props: Props) {
     ) {
       const x = movePos.x - props.data[props.selectedData].x;
       const y = movePos.y - props.data[props.selectedData].y;
-      const position: NotePos = {
+      const position: INotePos = {
         x: movePos2.x - x,
         y: movePos2.y - y,
         width: props.data[props.selectedData].width,
@@ -126,27 +128,34 @@ export default function NoteObj(props: Props) {
     }
   }, [movePos2]);
 
-  return (
-    <div
-      className="_noteObj"
-      onClick={() => noteObjClick(props.index)}
-      onMouseDown={(e) => noteObjMouseDown(e, props.index)}
-      style={{ cursor, backgroundColor, width, height, left, top }}
-    >
-      {props.selectedData === props.index ? (
-        <ResizeHandle
-          index={props.index}
-          data={props.data}
-          setData={props.setData}
-          mouse={props.mouse}
-          offset={props.offset}
-          gridSize={props.gridSize}
-          setResizeDraw={props.setResizeDraw}
-          resizeDraw={props.resizeDraw}
-        />
-      ) : null}
-    </div>
-  );
+  const noteObjProp: INoteObjProp = {
+    props: {
+      className: "_noteObj",
+      noteObjClick: noteObjClick,
+      noteObjMouseDown: noteObjMouseDown,
+      style: { cursor, width, height, left, top },
+      index: props.index,
+      data: props.data,
+      setData: props.setData,
+      mouse: props.mouse,
+      offset: props.offset,
+      gridSize: props.gridSize,
+      setResizeDraw: props.setResizeDraw,
+      resizeDraw: props.resizeDraw,
+      selectedData: props.selectedData,
+    },
+  };
+
+  switch (props.element.type) {
+    case "none":
+      return <NoneObj props={noteObjProp.props} />;
+    case "input":
+      return <InputObj props={noteObjProp.props} />;
+    case "textarea":
+      return <TextareaObj props={noteObjProp.props} />;
+    default:
+      return <NoneObj props={noteObjProp.props} />;
+  }
 }
 
 function diffPos(pos1: Coord, pos2: Coord): boolean {

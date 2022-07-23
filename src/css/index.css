@@ -2,6 +2,7 @@
 @import "main.css";
 @import "note.css";
 @import "modal.css";
+@import "noteObj.css";
 
 html {
   width: 100%;
@@ -63,7 +64,6 @@ body {
   /* pointer-events: none; */
   position: absolute;
   color: white;
-  /* cursor: pointer; */
 }
 
 ._prototype {
