@@ -3,11 +3,13 @@ import { useMouse, useOffset, useWindows } from "../hooks";
 import { INoteObj, INotePos, NoteObjType } from "../type";
 import { GridGuide } from "./gridGuide";
 import { Prototype } from "./prototype";
-import NoteObj from "./noteObj";
+import MutableNoteObj from "./mutalbleNoteObj/mutableNoteObj";
+import NoteObj from "./noteObj/noteObj";
 
 interface Props {
   drawType: NoteObjType | null;
   setDrawType: (drawable: NoteObjType | null) => void;
+  mode: boolean;
 }
 
 export function Paper(props: Props) {
@@ -29,11 +31,11 @@ export function Paper(props: Props) {
     <div
       className="note"
       ref={DOM}
-      style={{ cursor: props.drawType !== null ? "crosshair" : "default" }}
+      style={{ cursor: props.drawType !== null && props.mode === true ? "crosshair" : "default" }}
     >
       <GridGuide noteSize={noteSize} gridSize={GRID_SIZE} />
 
-      {props.drawType !== null ? (
+      {props.drawType !== null && props.mode === true ? (
         <Prototype
           offset={offset}
           gridSize={GRID_SIZE}
@@ -57,24 +59,28 @@ export function Paper(props: Props) {
         ></div>
       ) : null}
 
-      {data?.map((element, index) => {
-        return (
-          <NoteObj
-            key={index}
-            selectedData={selectedData}
-            index={index}
-            data={data}
-            setData={setData}
-            gridSize={GRID_SIZE}
-            mouse={mouse}
-            offset={offset}
-            setResizeDraw={setResizeDraw}
-            resizeDraw={resizeDraw}
-            setSelectedData={setSelectedData}
-            element={element}
-          />
-        );
-      })}
+      {props.mode
+        ? data?.map((element, index) => {
+            return (
+              <MutableNoteObj
+                key={index}
+                selectedData={selectedData}
+                index={index}
+                data={data}
+                setData={setData}
+                gridSize={GRID_SIZE}
+                mouse={mouse}
+                offset={offset}
+                setResizeDraw={setResizeDraw}
+                resizeDraw={resizeDraw}
+                setSelectedData={setSelectedData}
+                element={element}
+              />
+            );
+          })
+        : data?.map((element, index) => {
+            return <NoteObj element={element} gridSize={GRID_SIZE} />;
+          })}
     </div>
   );
 }

@@ -19,6 +19,16 @@ export interface INoteObj<T = any> extends INotePos {
 export interface INoteObjProp {
   props: {
     className: string;
+    width: number;
+    height: number;
+    left: number;
+    top: number;
+    element: INoteObj;
+  };
+}
+export interface IMutableNoteObjProp {
+  props: {
+    className: string;
     noteObjClick: (index: number) => void;
     noteObjMouseDown: (e: React.MouseEvent, index: number) => void;
     style: {

@@ -4,7 +4,7 @@ import { AppMode } from "../type";
 const { ipcRenderer } = window.require("electron");
 
 interface Props {
-  setMode: (mode: AppMode) => void;
+  setPage: (mode: AppMode) => void;
   setModal: (modal: boolean) => void;
   setData: (data: string) => void;
 }
@@ -13,7 +13,7 @@ export function MainPage(props: Props) {
   useEffect(() => {
     ipcRenderer.on("fsRead", (event: any, args: string) => {
       props.setData(args);
-      props.setMode("note");
+      props.setPage("note");
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -24,7 +24,7 @@ export function MainPage(props: Props) {
 
   const newFile = () => {
     props.setData("");
-    props.setMode("note");
+    props.setPage("note");
   };
 
   return (

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useMouseReturn } from "../hooks";
-import { Coord, INoteObj, INoteObjProp, INotePos } from "../type";
-import InputObj from "./noteObj/inputObj";
-import NoneObj from "./noteObj/noneObj";
-import TextareaObj from "./noteObj/textareaObj";
-import { collapseCheck } from "./prototype";
+import { useMouseReturn } from "../../hooks";
+import { Coord, INoteObj, IMutableNoteObjProp, INotePos } from "../../type";
+import MutableInputObj from "./mutableInputObj";
+import MutableNoneObj from "./mutableNoneObj";
+import MutableTextareaObj from "./mutableTextareaObj";
+import { collapseCheck } from "../prototype";
 
 interface Props {
   selectedData: number | null;
@@ -20,7 +20,7 @@ interface Props {
   element: INoteObj;
 }
 
-export default function NoteObj(props: Props) {
+export default function MutableNoteObj(props: Props) {
   // Mouse position when first clicked
   const [movePos, setMovePos] = useState<Coord | null>(null);
   // Mouse position when mouseUp
@@ -128,7 +128,7 @@ export default function NoteObj(props: Props) {
     }
   }, [movePos2]);
 
-  const noteObjProp: INoteObjProp = {
+  const mutalbeNoteObjProp: IMutableNoteObjProp = {
     props: {
       className: "_noteObj",
       noteObjClick: noteObjClick,
@@ -148,13 +148,13 @@ export default function NoteObj(props: Props) {
 
   switch (props.element.type) {
     case "none":
-      return <NoneObj props={noteObjProp.props} />;
+      return <MutableNoneObj props={mutalbeNoteObjProp.props} />;
     case "input":
-      return <InputObj props={noteObjProp.props} />;
+      return <MutableInputObj props={mutalbeNoteObjProp.props} />;
     case "textarea":
-      return <TextareaObj props={noteObjProp.props} />;
+      return <MutableTextareaObj props={mutalbeNoteObjProp.props} />;
     default:
-      return <NoneObj props={noteObjProp.props} />;
+      return <MutableNoneObj props={mutalbeNoteObjProp.props} />;
   }
 }
 
