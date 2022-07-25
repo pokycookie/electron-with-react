@@ -67,8 +67,8 @@ export default function MutableNoteObj(props: Props) {
           y: props.resizeDraw.y,
           width: props.resizeDraw.width,
           height: props.resizeDraw.height,
-          data: null,
-          type: props.data[props.index].type,
+          data: props.element.data,
+          type: props.element.type,
         };
         if (!collapseCheck(tempData, origin)) {
           origin.splice(props.selectedData, 0, tempData);

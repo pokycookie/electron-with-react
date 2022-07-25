@@ -6,6 +6,9 @@ import TextAreaObj from "./textareaObj";
 interface Props {
   element: INoteObj;
   gridSize: number;
+  index: number;
+  data: INoteObj[];
+  setData: (data: INoteObj[]) => void;
 }
 
 export default function NoteObj(props: Props) {
@@ -22,6 +25,9 @@ export default function NoteObj(props: Props) {
       left,
       top,
       width,
+      index: props.index,
+      data: props.data,
+      setData: props.setData,
     },
   };
 

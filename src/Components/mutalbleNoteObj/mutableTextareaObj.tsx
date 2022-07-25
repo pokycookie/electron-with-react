@@ -1,14 +1,15 @@
-import { IMutableNoteObjProp } from "../../type";
+import { IMutableNoteObjProp, ITextarea } from "../../type";
 import { ResizeHandle } from "../resizeHandle";
 
 export default function MutableTextareaObj(prop: IMutableNoteObjProp) {
   const props = prop.props;
-
   const cursor = props.style.cursor;
   const width = props.style.width;
   const height = props.style.height;
   const left = props.style.left;
   const top = props.style.top;
+
+  const data = props.data[props.index].data as ITextarea;
 
   return (
     <div
@@ -17,7 +18,12 @@ export default function MutableTextareaObj(prop: IMutableNoteObjProp) {
       onMouseDown={(e) => props.noteObjMouseDown(e, props.index)}
       style={{ width, height, left, top }}
     >
-      <textarea className="noteObj_input" style={{ cursor, resize: "none" }}></textarea>
+      <textarea
+        className="noteObj_input"
+        style={{ cursor, resize: "none" }}
+        value={data.content || ""}
+        readOnly
+      ></textarea>
       {props.selectedData === props.index ? (
         <ResizeHandle
           index={props.index}

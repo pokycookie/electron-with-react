@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMouse } from "../hooks";
-import { Coord, INoteObj, NoteObjType } from "../type";
+import { Coord, IInput, INoteObj, ITextarea, ITime, NoteObjType } from "../type";
 
 interface Props {
   offset: false | Coord;
@@ -35,7 +35,7 @@ export function Prototype(props: Props) {
         y: Math.round(Math.min(startPos.y, position.y) / props.gridSize),
         width: Math.round((Math.abs(position.x - startPos.x) + props.gridSize) / props.gridSize),
         height: Math.round((Math.abs(position.y - startPos.y) + props.gridSize) / props.gridSize),
-        data: null,
+        data: getDataByType(props.type),
         type: props.type,
       };
       // push data if there's no collapse
@@ -104,4 +104,30 @@ export function collapseCheck(target: INoteObj, dataArr: INoteObj[]): boolean {
   });
 
   return result;
+}
+
+function getDataByType(type: NoteObjType) {
+  switch (type) {
+    case "none":
+      return null;
+    case "input":
+      const input: IInput = {
+        content: "",
+      };
+      return input;
+    case "textarea":
+      const textarea: ITextarea = {
+        content: "",
+      };
+      return textarea;
+    case "time":
+      const time: ITime = {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      };
+      return time;
+    default:
+      return null;
+  }
 }

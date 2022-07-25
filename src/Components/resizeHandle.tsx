@@ -52,7 +52,7 @@ export function ResizeHandle(props: Props) {
             y: Math.min(startPos.y, position.y),
             width: Math.abs(position.x - startPos.x) + 1,
             height: Math.abs(position.y - startPos.y) + 1,
-            data: null,
+            data: props.data[props.index].data,
             type: props.data[props.index].type,
           };
           // Collapse check before apply data

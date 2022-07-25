@@ -1,4 +1,4 @@
-import { faFlaskVial, faKeyboard } from "@fortawesome/free-solid-svg-icons";
+import { faKeyboard } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { AppMode, NoteObjType } from "../type";
@@ -54,9 +54,6 @@ export function NotePage(props: Props) {
         <Paper drawType={drawType} setDrawType={setDrawType} mode={mode} />
         {mode ? (
           <div className="nav">
-            <button className="navBtn" onClick={() => typeBtnOnClick("none")}>
-              <FontAwesomeIcon icon={faFlaskVial} />
-            </button>
             <button className="navBtn" onClick={() => typeBtnOnClick("input")}>
               <FontAwesomeIcon icon={faKeyboard} />
             </button>

@@ -1,14 +1,15 @@
-import { IMutableNoteObjProp } from "../../type";
+import { IInput, IMutableNoteObjProp } from "../../type";
 import { ResizeHandle } from "../resizeHandle";
 
 export default function MutableInputObj(prop: IMutableNoteObjProp) {
   const props = prop.props;
-
   const cursor = props.style.cursor;
   const width = props.style.width;
   const height = props.style.height;
   const left = props.style.left;
   const top = props.style.top;
+
+  const data = props.data[props.index].data as IInput;
 
   return (
     <div
@@ -17,7 +18,7 @@ export default function MutableInputObj(prop: IMutableNoteObjProp) {
       onMouseDown={(e) => props.noteObjMouseDown(e, props.index)}
       style={{ width, height, left, top }}
     >
-      <input className="noteObj_input" style={{ cursor }} />
+      <input className="noteObj_input" style={{ cursor }} value={data.content || ""} readOnly />
       {props.selectedData === props.index ? (
         <ResizeHandle
           index={props.index}

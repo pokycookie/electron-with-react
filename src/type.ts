@@ -24,6 +24,9 @@ export interface INoteObjProp {
     left: number;
     top: number;
     element: INoteObj;
+    index: number;
+    data: INoteObj[];
+    setData: (data: INoteObj[]) => void;
   };
 }
 export interface IMutableNoteObjProp {

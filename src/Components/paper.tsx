@@ -79,7 +79,16 @@ export function Paper(props: Props) {
             );
           })
         : data?.map((element, index) => {
-            return <NoteObj element={element} gridSize={GRID_SIZE} />;
+            return (
+              <NoteObj
+                element={element}
+                index={index}
+                data={data}
+                setData={setData}
+                gridSize={GRID_SIZE}
+                key={index}
+              />
+            );
           })}
     </div>
   );
