@@ -4,7 +4,7 @@ import { Coord, INoteObj, IMutableNoteObjProp, INotePos } from "../../type";
 import MutableInputObj from "./mutableInputObj";
 import MutableNoneObj from "./mutableNoneObj";
 import MutableTextareaObj from "./mutableTextareaObj";
-import { collapseCheck } from "../prototype";
+import { collapseCheck, getOptionByType, optionsCheck } from "../prototype";
 import MutableCheckboxObj from "./mutableCheckboxObj";
 
 interface Props {
@@ -63,15 +63,20 @@ export default function MutableNoteObj(props: Props) {
       if (props.data !== null && props.resizeDraw !== false) {
         const origin = [...props.data];
         origin.splice(props.selectedData, 1);
+        const width = props.resizeDraw.width;
+        const height = props.resizeDraw.height;
         const tempData: INoteObj = {
           x: props.resizeDraw.x,
           y: props.resizeDraw.y,
-          width: props.resizeDraw.width,
-          height: props.resizeDraw.height,
+          width,
+          height,
           data: props.element.data,
           type: props.element.type,
         };
-        if (!collapseCheck(tempData, origin)) {
+        if (
+          !collapseCheck(tempData, origin) &&
+          optionsCheck(getOptionByType(props.element.type), width, height)
+        ) {
           origin.splice(props.selectedData, 0, tempData);
           props.setData(origin);
         }

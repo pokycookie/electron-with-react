@@ -19,6 +19,8 @@ export function Paper(props: Props) {
   const [selectedData, setSelectedData] = useState<number | null>(null);
   // Position for resizing noteObj
   const [resizeDraw, setResizeDraw] = useState<INotePos | false>(false);
+  // Flag true: resizeDraw fail, false: resizeDraw success
+  const [resizeFlag, setResizeFlag] = useState<boolean>(false);
 
   const DOM = useRef<HTMLDivElement>(null);
   const offset = useOffset(DOM, { height: -80 });
@@ -50,7 +52,6 @@ export function Paper(props: Props) {
         <div
           className="_noteObj resizeDraw"
           style={{
-            backgroundColor: "red",
             width: resizeDraw.width * GRID_SIZE,
             height: resizeDraw.height * GRID_SIZE,
             left: resizeDraw.x * GRID_SIZE,
