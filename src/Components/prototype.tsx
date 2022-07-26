@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMouse } from "../hooks";
-import { Coord, IInput, INoteObj, ITextarea, ITime, NoteObjType } from "../type";
+import { Coord, ICheckbox, IInput, INoteObj, ITextarea, ITime, NoteObjType } from "../type";
 
 interface Props {
   offset: false | Coord;
@@ -127,6 +127,11 @@ function getDataByType(type: NoteObjType) {
         seconds: 0,
       };
       return time;
+    case "checkbox":
+      const checkbox: ICheckbox = {
+        checked: false,
+      };
+      return checkbox;
     default:
       return null;
   }

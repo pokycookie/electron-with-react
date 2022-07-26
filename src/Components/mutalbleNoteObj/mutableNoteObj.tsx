@@ -5,6 +5,7 @@ import MutableInputObj from "./mutableInputObj";
 import MutableNoneObj from "./mutableNoneObj";
 import MutableTextareaObj from "./mutableTextareaObj";
 import { collapseCheck } from "../prototype";
+import MutableCheckboxObj from "./mutableCheckboxObj";
 
 interface Props {
   selectedData: number | null;
@@ -153,6 +154,8 @@ export default function MutableNoteObj(props: Props) {
       return <MutableInputObj props={mutalbeNoteObjProp.props} />;
     case "textarea":
       return <MutableTextareaObj props={mutalbeNoteObjProp.props} />;
+    case "checkbox":
+      return <MutableCheckboxObj props={mutalbeNoteObjProp.props} />;
     default:
       return <MutableNoneObj props={mutalbeNoteObjProp.props} />;
   }

@@ -1,4 +1,5 @@
 import { INoteObj, INoteObjProp } from "../../type";
+import CheckboxObj from "./checkboxObj";
 import InputObj from "./inputObj";
 import NoneObj from "./noneObj";
 import TextAreaObj from "./textareaObj";
@@ -38,6 +39,8 @@ export default function NoteObj(props: Props) {
       return <InputObj props={noteObjProp.props} />;
     case "textarea":
       return <TextAreaObj props={noteObjProp.props} />;
+    case "checkbox":
+      return <CheckboxObj props={noteObjProp.props} />;
     default:
       return <NoneObj props={noteObjProp.props} />;
   }

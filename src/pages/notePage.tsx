@@ -1,4 +1,4 @@
-import { faKeyboard } from "@fortawesome/free-solid-svg-icons";
+import { faKeyboard, faSquareCheck } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { AppMode, NoteObjType } from "../type";
@@ -59,6 +59,9 @@ export function NotePage(props: Props) {
             </button>
             <button className="navBtn" onClick={() => typeBtnOnClick("textarea")}>
               <FontAwesomeIcon icon={faKeyboard} />
+            </button>
+            <button className="navBtn" onClick={() => typeBtnOnClick("checkbox")}>
+              <FontAwesomeIcon icon={faSquareCheck} />
             </button>
           </div>
         ) : null}

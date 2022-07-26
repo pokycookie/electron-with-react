@@ -64,3 +64,6 @@ export interface ITime {
   minutes: number;
   seconds: number;
 }
+export interface ICheckbox {
+  checked: boolean;
+}
