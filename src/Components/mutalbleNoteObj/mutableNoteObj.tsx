@@ -19,6 +19,8 @@ interface Props {
   resizeDraw: INotePos | false;
   setSelectedData: (data: number | null) => void;
   element: INoteObj;
+  resizeFlag: boolean;
+  setResizeFlag: (flag: boolean) => void;
 }
 
 export default function MutableNoteObj(props: Props) {
@@ -32,6 +34,22 @@ export default function MutableNoteObj(props: Props) {
   const height = props.element.height * props.gridSize;
   const left = props.element.x * props.gridSize;
   const top = props.element.y * props.gridSize;
+
+  const options = getOptionByType(props.data[props.index].type);
+  const origin = [...props.data];
+  origin.splice(props.selectedData || 0, 1);
+
+  const emptyNoteObj: INoteObj =
+    props.resizeDraw !== false
+      ? {
+          x: props.resizeDraw.x,
+          y: props.resizeDraw.y,
+          width: props.resizeDraw.width,
+          height: props.resizeDraw.height,
+          type: "none",
+          data: null,
+        }
+      : { x: 0, y: 0, width: 0, height: 0, type: "none", data: null };
 
   // Select data
   const noteObjClick = (index: number) => {
@@ -131,6 +149,14 @@ export default function MutableNoteObj(props: Props) {
       props.setResizeDraw(position);
     } else {
       props.setResizeDraw(false);
+    }
+    if (
+      collapseCheck(emptyNoteObj, origin) ||
+      !optionsCheck(options, emptyNoteObj.width, emptyNoteObj.height)
+    ) {
+      if (!props.resizeFlag) props.setResizeFlag(true);
+    } else {
+      if (props.resizeFlag) props.setResizeFlag(false);
     }
   }, [movePos2]);
 

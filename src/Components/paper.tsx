@@ -52,6 +52,7 @@ export function Paper(props: Props) {
         <div
           className="_noteObj resizeDraw"
           style={{
+            backgroundColor: resizeFlag ? "red" : "#395b64",
             width: resizeDraw.width * GRID_SIZE,
             height: resizeDraw.height * GRID_SIZE,
             left: resizeDraw.x * GRID_SIZE,
@@ -76,6 +77,8 @@ export function Paper(props: Props) {
                 resizeDraw={resizeDraw}
                 setSelectedData={setSelectedData}
                 element={element}
+                resizeFlag={resizeFlag}
+                setResizeFlag={setResizeFlag}
               />
             );
           })

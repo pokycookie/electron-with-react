@@ -85,7 +85,11 @@ export function Prototype(props: Props) {
         <div
           className="_prototype"
           style={{
-            backgroundColor: collapseCheck(currentNoteObj, props.data) ? "red" : "#395b64",
+            backgroundColor:
+              collapseCheck(currentNoteObj, props.data) ||
+              !optionsCheck(options, currentNoteObj.width, currentNoteObj.height)
+                ? "red"
+                : "#395b64",
             width: Math.abs(position.x - startPos.x) + props.gridSize,
             height: Math.abs(position.y - startPos.y) + props.gridSize,
             left: Math.min(startPos.x, position.x),
@@ -99,6 +103,7 @@ export function Prototype(props: Props) {
 
 /** If collapse, returns true */
 export function collapseCheck(target: INoteObj, dataArr: INoteObj[] | null): boolean {
+  // INoteObj => INotePos Required!!!
   if (dataArr === null) return false;
 
   let result = false;
