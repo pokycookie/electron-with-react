@@ -150,6 +150,9 @@ export default function MutableNoteObj(props: Props) {
     } else {
       props.setResizeDraw(false);
     }
+  }, [movePos2]);
+
+  useEffect(() => {
     if (
       collapseCheck(emptyNoteObj, origin) ||
       !optionsCheck(options, emptyNoteObj.width, emptyNoteObj.height)
@@ -158,7 +161,7 @@ export default function MutableNoteObj(props: Props) {
     } else {
       if (props.resizeFlag) props.setResizeFlag(false);
     }
-  }, [movePos2]);
+  }, [props.resizeDraw]);
 
   const mutalbeNoteObjProp: IMutableNoteObjProp = {
     props: {
