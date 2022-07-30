@@ -22,7 +22,7 @@ export default function CheckboxObj(prop: INoteObjProp) {
 
   return (
     <div className={props.className} style={{ width, height, left, top }}>
-      <Checkbox checked={checked} onChange={onChange} mutable={false} />
+      <Checkbox checked={checked} onChange={onChange} mutable={false} size={width + 5} />
     </div>
   );
 }

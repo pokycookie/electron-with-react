@@ -19,7 +19,7 @@ export default function MutableCheckboxObj(prop: IMutableNoteObjProp) {
       onMouseDown={(e) => props.noteObjMouseDown(e, props.index)}
       style={{ width, height, left, top }}
     >
-      <Checkbox cursor={cursor} checked={data.checked || false} mutable={true} />
+      <Checkbox cursor={cursor} checked={data.checked || false} mutable={true} size={width + 5} />
       {props.selectedData === props.index ? (
         <ResizeHandle
           index={props.index}

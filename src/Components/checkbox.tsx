@@ -1,3 +1,6 @@
+import { faSquare } from "@fortawesome/free-regular-svg-icons";
+import { faSquareCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 interface Props {
@@ -5,6 +8,7 @@ interface Props {
   mutable: boolean;
   onChange?: (value: boolean) => void;
   cursor?: string;
+  size: number;
 }
 
 export default function Checkbox(props: Props) {
@@ -22,12 +26,8 @@ export default function Checkbox(props: Props) {
   };
 
   return (
-    <div
-      onClick={onClick}
-      className="noteObj_checkbox"
-      style={{ cursor, backgroundColor: checked ? "#2B7A0B" : "white" }}
-    >
-      {/* <FontAwesomeIcon icon={checked ? faSquareCheck : faSquare} /> */}
+    <div onClick={onClick} className="noteObj_checkbox" style={{ cursor, fontSize: props.size }}>
+      <FontAwesomeIcon icon={checked ? faSquareCheck : faSquare} />
     </div>
   );
 }

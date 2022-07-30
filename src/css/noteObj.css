@@ -17,8 +17,10 @@
 .noteObj_checkbox {
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  border: 5px solid #5bb318;
-  border-radius: 5%;
+  color: black;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
